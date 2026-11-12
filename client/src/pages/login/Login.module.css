@@ -1,0 +1,153 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; 
+  padding-top: 85px;       
+  padding-bottom: 32px;    
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: #ffffff;
+  min-height: auto;        
+}
+
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 32px;              
+  max-width: 935px;
+  width: 100%;
+}
+
+.imageBox {
+  display: flex;
+  justify-content: center;
+}
+
+.imageBox img {
+  max-width: 380px;
+  height: auto;
+  max-height: 581px;
+}
+
+@media (max-width: 875px) {
+  .imageBox {
+    display: none;
+  }
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 350px;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #dbdbdb;
+  padding: 53px 40px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 9px 8px;
+  background-color: #fafafa;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  font-size: 12px;
+  color: #262626;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #a8a8a8;
+}
+
+.button {
+  margin-top: 8px;
+  width: 100%;
+  padding: 7px 16px;
+  background-color: #0095f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #1877f2;
+}
+
+.button:disabled {
+  background-color: #4cb5f9;
+  cursor: not-allowed;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 18px 0;
+  color: #737373;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.divider span {
+  padding: 0 18px;
+}
+
+.forgotLink {
+  color: #00376be0;
+  font-weight: 500;
+  font-size: 12px;
+  text-decoration: none;
+  margin-top: 12px;
+}
+
+.switchCard {
+  background-color: #ffffff;
+  border: 1px solid #dbdbdb;
+  padding: 20px; 
+  text-align: center;
+  font-size: 14px;
+  color: #262626;
+}
+
+.switchLink {
+  color: #0095f6;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 4px;
+}
+
+.errorText {
+  color: #ed4956;
+  font-size: 12px;
+  margin: 2px 0 4px;
+  text-align: left;
+}
