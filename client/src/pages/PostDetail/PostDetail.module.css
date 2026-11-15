@@ -1,0 +1,194 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  filter: brightness(0) invert(1);
+  width: 24px;
+  height: 24px;
+  z-index: 2010;
+}
+
+.modalCard {
+  display: flex;
+  width: 900px;
+  height: 600px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.imageSection {
+  flex: 1.2;
+  background-color: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.imageSection img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.contentSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid #dbdbdb;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #efefefdc;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.copyLinkBtn {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.copyLinkBtn:hover {
+  color: #00376b;
+}
+
+.commentsList {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.commentItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.commentContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.commentText {
+  font-size: 14px;
+  color: #262626;
+  margin: 0;
+  word-break: break-word;
+}
+
+.footerSection {
+  border-top: 1px solid #dbdbdb;
+  padding: 12px 16px;
+  background-color: #ffffff;
+}
+
+.actions {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.actionBtn img {
+  width: 24px;
+  height: 24px;
+}
+
+.likesCount {
+  font-weight: 600;
+  font-size: 14px;
+  color: #262626;
+  margin-bottom: 12px;
+}
+
+.commentForm {
+  display: flex;
+  border-top: 1px solid #efefef;
+  padding-top: 12px;
+  align-items: center;
+}
+
+.commentForm input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: transparent;
+  color: #262626;
+}
+
+.commentForm input::placeholder {
+  color: #8e8e8e;
+}
+
+.sendBtn {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.sendBtn:hover {
+  color: #00376b;
+}

@@ -1,0 +1,93 @@
+.postCard {
+  background-color: #ffffff;
+  border-bottom: 1px solid #dbdbdbe1;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  max-width: 470px;
+  margin-bottom: 24px;
+}
+
+.postHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 14px 0;
+}
+
+.authorInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.username {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.followBtn {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 12px;
+}
+
+.followBtn:hover {
+  color: #00376b;
+}
+
+.imageContainer {
+  width: 100%;
+  background-color: #efefef;
+  border-radius: 3px;
+}
+
+.postImage {
+  width: 100%;
+  height: 470px;
+  display: block;
+  object-fit: cover;
+  flex-shrink: 1;
+  border: 0.86px solid #dbdbdb;
+  border-radius: 3px;
+}
+
+.postActions {
+  display: flex;
+  gap: 16px;
+  padding: 10px 14px 6px;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.actionIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.likesCount {
+  padding: 0 14px 14px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #262626;
+}

@@ -14,8 +14,8 @@ router.post("/register", async (req, res) => {
         }
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
         if (!passwordRegex.test(password)) {
-            return res.status(400).json({ 
-                message: "Password must be at least 10 characters and include uppercase, lowercase, number and special character." 
+            return res.status(400).json({
+                message: "Password must be at least 10 characters and include uppercase, lowercase, number and special character."
             });
         }
 
@@ -72,8 +72,12 @@ router.post("/login", async (req, res) => {
 
         return res.status(200).json({
             message: "Login successful",
-            token
+            token,
+            userId: user._id,
+            username: user.username,
+            profileImage: user.profileImage
         });
+        
     } catch (error) {
         console.error("Login error:", error);
         return res.status(500).json({ message: "Internal server error during login." });
