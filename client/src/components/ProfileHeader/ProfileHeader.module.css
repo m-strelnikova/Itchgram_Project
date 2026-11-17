@@ -1,0 +1,147 @@
+.headerContainer {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    max-width: 935px;
+    width: 100%;
+    margin: 30px auto 44px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.avatarWrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.avatar {
+    width: 134px;
+    height: 134px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 2;
+}
+
+.circleBorder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.infoSection {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.topRow {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.username {
+    font-size: 20px;
+    font-weight: 400;
+    color: #262626;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    padding: 7px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+}
+
+.followBtn {
+    background-color: #0095f6;
+    color: #ffffff;
+}
+
+.followBtn:hover {
+    background-color: #1877f2;
+}
+
+.followingBtn {
+    background-color: #efefef;
+    color: #262626;
+}
+
+.messageBtn {
+    background-color: #efefef;
+    color: #262626;
+}
+
+.messageBtn:hover,
+.followingBtn:hover {
+    background-color: #dbdbdb;
+}
+
+.editProfileBtn {
+    background-color: transparent;
+    border: 1px solid #dbdbdb;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    color: #262626;
+}
+
+.editProfileBtn:hover {
+    background-color: #fafafa;
+}
+
+.statsRow {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #262626;
+}
+
+.bioSection {
+    font-size: 14px;
+    color: #262626;
+    line-height: 1.4;
+}
+
+.fullName {
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.bioText {
+    margin: 0;
+    color: #262626;
+    white-space: pre-wrap;
+}
+.linkLine {
+    display: flex;
+    flex-direction: row;
+    padding: 6px 0;
+    gap: 8px;
+}
+.linkText {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 129%;
+    color: #00376b;
+}

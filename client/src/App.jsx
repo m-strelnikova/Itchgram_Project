@@ -5,6 +5,7 @@ import Login from "./pages/login";
 import Home from "./pages/Home";
 import PostDetail from "./pages/PostDetail";
 import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -25,27 +26,28 @@ function PublicRoute({ children }) {
 function App() {
   return (
     <>
-     <Routes>
-      <Route path="/" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
+      <Routes>
+        <Route path="/" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
 
-      <Route path="/login" element={<PublicRoute> <Login /> </PublicRoute>} />
-      <Route path="/register" element={<PublicRoute> <Register /> </PublicRoute>} />
-      <Route path="/reset" element={<PublicRoute> <ResetPassword /> </PublicRoute>} />
+        <Route path="/login" element={<PublicRoute> <Login /> </PublicRoute>} />
+        <Route path="/register" element={<PublicRoute> <Register /> </PublicRoute>} />
+        <Route path="/reset" element={<PublicRoute> <ResetPassword /> </PublicRoute>} />
 
-      <Route 
-        path="/posts/:postId" 
-        element={
-          <ProtectedRoute>
-            <Home />
-            <PostDetail />
-          </ProtectedRoute>
-        } 
-      />
+        <Route
+          path="/posts/:postId"
+          element={
+            <ProtectedRoute>
+              <Home />
+              <PostDetail />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route path="/profile/:userId" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
+        <Route path="/profile/:userId" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
+        <Route path="/profile/edit" element={<ProtectedRoute> <ProfileEdit /> </ProtectedRoute>} />
 
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </>
   )
 }

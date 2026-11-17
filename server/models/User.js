@@ -26,7 +26,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    bio: { type: String, maxlength: 120 },
+    bio: { type: String, maxlength: 150, default: "" },
+    website: { type: String, maxlength: 150, default: ""},
     profileImage: {
         type: String,
         trim: true,

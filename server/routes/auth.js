@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { userId: user._id, username: user.username },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "6h" }
         );
 
         return res.status(200).json({
@@ -75,9 +75,8 @@ router.post("/login", async (req, res) => {
             token,
             userId: user._id,
             username: user.username,
-            profileImage: user.profileImage
         });
-        
+
     } catch (error) {
         console.error("Login error:", error);
         return res.status(500).json({ message: "Internal server error during login." });

@@ -39,4 +39,70 @@ router.post("/:id/follow", authMiddleware, async (req, res) => {
     }
 });
 
+router.get("/:id", authMiddleware, async (req, res) => {
+    try {
+
+        const user = await User.findById(req.params.id);
+        if (!user) return res.status(404).json({ message: "User not found" });
+        return res.status(200).json({
+            _id: user._id,
+            username: user.username,
+            profileImage: user.profileImage, 
+            fullName: user.fullName,
+            bio: user.bio, 
+            followers: user.followers, 
+            following: user.following, 
+            website: user.website,
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to fetch user data" });
+    }
+});
+
+// Обновление профиля текущего пользователя
+router.patch("/profile/edit", authMiddleware, async (req, res) => {
+    try {
+        const currentUserId = req.user.userId;
+        const { username, fullName, website, bio, profileImage } = req.body;
+
+        if (username) {
+            const existingUser = await User.findOne({ username, _id: { $ne: currentUserId } });
+            if (existingUser) {
+                return res.status(400).json({ message: "This username is already taken." });
+            }
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            currentUserId,
+            { 
+                ...(username && { username }),
+                ...(fullName && { fullName}),
+                ...(website !== undefined && { website }),
+                ...(bio !== undefined && { bio }),
+                ...(profileImage && { profileImage })
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json({
+            message: "Profile updated successfully",
+            user: {
+                _id: updatedUser._id,
+                username: updatedUser.username,
+                profileImage: updatedUser.profileImage,
+                fullName: updatedUser.fullName,
+                bio: updatedUser.bio,
+                website: updatedUser.website
+            }
+        });
+    } catch (error) {
+        console.error("Update profile error:", error);
+        res.status(500).json({ message: "Failed to update profile" });
+    }
+});
+
 export default router;
