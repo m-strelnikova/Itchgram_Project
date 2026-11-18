@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useParams, Outlet } from "react-router";
+import { useNavigate} from "react-router-dom";
 import styles from "./Home.module.css";
-import Sidebar from "../../components/Sidebar";
 import PostCard from "../../components/PostCard";
-import Footer from "../../components/Footer";
-import CreatePostModal from "../../components/CreatePostModal";
 import checkIcon from "../../assets/icons/check.svg";
 
 function Home() {
   const [posts, setPosts] = useState([]);
-  const [activeModal, setActiveModal] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const currentUserId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
-  const { postId } = useParams();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -37,18 +32,6 @@ function Home() {
     fetchPosts();
   }, []);
 
-  const handleNavClick = (menuName) => {
-    if (["Search", "Notifications", "Messages", "Create"].includes(menuName)) {
-      setActiveModal(activeModal === menuName ? null : menuName);
-    } else {
-      setActiveModal(null);
-      if (menuName === "Home") navigate("/");
-      if (menuName === "Profile") {
-        const currentUserId = localStorage.getItem("userId");
-        navigate(`/profile/${currentUserId}`);
-      }
-    }
-  };
 
   const handleLike = async (postIdToLike, e) => {
     e.stopPropagation();
@@ -85,22 +68,7 @@ function Home() {
   };
 
   return (
-    <div className={styles.layout}>
-      <Sidebar activeModal={activeModal} onNavClick={handleNavClick} />
-
-      {activeModal === "Create" ? (
-        <CreatePostModal
-          onClose={() => setActiveModal(null)}
-          onPostCreated={(newPost) => setPosts([newPost, ...posts])}
-        />
-      ) : activeModal ? (
-        <div className={styles.modalOverlay} onClick={() => setActiveModal(null)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-            <h2 className={styles.modalTitle}>{activeModal}</h2>
-          </div>
-        </div>
-      ) : null}
-
+    <div>
       <main className={styles.mainContent}>
         {error && <p className={styles.errorText}>{error}</p>}
         {loading && <p className={styles.loadingText}>Loading...</p>}
@@ -124,10 +92,7 @@ function Home() {
           <span className={styles.endSubtitle}>You have viewed all new publications</span>
         </div>
 
-        <Footer handleNavClick={handleNavClick} />
       </main>
-
-      {postId && <Outlet />}
     </div>
   );
 }

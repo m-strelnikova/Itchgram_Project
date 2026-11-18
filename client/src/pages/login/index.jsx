@@ -2,7 +2,7 @@ import styles from "./Login.module.css";
 import login_pic from "../../assets/img/login_pic.png";
 import ichgram from "../../assets/icons/ichgram.svg";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
 

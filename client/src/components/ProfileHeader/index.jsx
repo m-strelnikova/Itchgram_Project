@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import styles from "./ProfileHeader.module.css";
 import profileIcon from "../../assets/icons/profile.svg";
 import circleIcon from "../../assets/icons/circle.svg";

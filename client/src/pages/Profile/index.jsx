@@ -1,18 +1,17 @@
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate, useOutletContext } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styles from "./Profile.module.css";
-import Sidebar from "../../components/Sidebar";
-import CreatePostModal from "../../components/CreatePostModal";
 import ProfileHeader from "../../components/ProfileHeader";
-
 
 function Profile() {
     const { userId } = useParams();
     const navigate = useNavigate();
+
+    const { setActiveModal } = useOutletContext();
+
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [activeModal, setActiveModal] = useState(null);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -41,60 +40,33 @@ function Profile() {
         }
     }, [userId]);
 
-    const handleNavClick = (menuName) => {
-        if (["Search", "Notifications", "Messages", "Create"].includes(menuName)) {
-            setActiveModal(activeModal === menuName ? null : menuName);
-        } else {
-            setActiveModal(null);
-            if (menuName === "Home") navigate("/");
-            if (menuName === "Profile") {
-                const currentUserId = localStorage.getItem("userId");
-                navigate(`/profile/${currentUserId}`);
-            }
-        }
-    };
     return (
-        <div className={styles.layout}>
-            <Sidebar activeModal={activeModal} onNavClick={handleNavClick} />
+        <div className={styles.profileContainer}>
+            <ProfileHeader
+                profileUserId={userId}
+                postsCount={posts.length}
+                onOpenMessageModal={() => setActiveModal("Messages")}
+            />
 
-            <section className={styles.mainContent}>
-                {activeModal === "Create" ? (
-                    <CreatePostModal
-                        onClose={() => setActiveModal(null)}
-                        onPostCreated={(newPost) => setPosts([newPost, ...posts])}
-                    />
-                ) : activeModal ? (
-                    <div className={styles.modalOverlay} onClick={() => setActiveModal(null)}>
-                        <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                            <h2 className={styles.modalTitle}>{activeModal}</h2>
-                        </div>
-                    </div>
-                ) : null}
+            <main className={styles.mainSection}>
+                {error && <p className={styles.errorText}>{error}</p>}
+                {loading && <p className={styles.loadingText}>Loading...</p>}
 
-                <ProfileHeader
-                    profileUserId={ userId }
-                    postsCount={ posts.length }
-                    onOpenMessageModal={() => setActiveModal("Messages")}
-                />
-                <main>
-                    {error && <p className={styles.errorText}>{error}</p>}
-                    {loading && <p className={styles.loadingText}>Loading...</p>}
-
-                    <div className={styles.feed}>
-                        {posts.map((post) => (
-                            <article key={post._id} className={styles.imageContainer}
-                                onClick={() => navigate(`/posts/${post._id}`)}
-                                style={{ cursor: "pointer" }}>
-                                <img src={post.imageUrl} alt="Image profil feed" className={styles.postImage} />
-                            </article>
-                        ))}
-                    </div>
-                </main>
-            </section>
-
+                <div className={styles.feed}>
+                    {posts.map((post) => (
+                        <article
+                            key={post._id}
+                            className={styles.imageContainer}
+                            onClick={() => navigate(`/posts/${post._id}`)}
+                            style={{ cursor: "pointer" }}
+                        >
+                            <img src={post.imageUrl} alt="Profile feed post" className={styles.postImage} />
+                        </article>
+                    ))}
+                </div>
+            </main>
         </div>
-    )
-
+    );
 }
 
-export default Profile; 
+export default Profile;

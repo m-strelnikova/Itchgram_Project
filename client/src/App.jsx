@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/ResetPassword";
 import Login from "./pages/login";
@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import PostDetail from "./pages/PostDetail";
 import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
+import MainLayout from "./components/MainLayout";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -27,24 +28,18 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
-
         <Route path="/login" element={<PublicRoute> <Login /> </PublicRoute>} />
         <Route path="/register" element={<PublicRoute> <Register /> </PublicRoute>} />
         <Route path="/reset" element={<PublicRoute> <ResetPassword /> </PublicRoute>} />
 
-        <Route
-          path="/posts/:postId"
-          element={
-            <ProtectedRoute>
-              <Home />
-              <PostDetail />
-            </ProtectedRoute>
-          }
-        />
+        <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
+        <Route path="/" element={<Home />} />
+  <Route path="/posts/:postId" element={<PostDetail />} />
+  <Route path="/profile/:userId" element={<Profile />} />
+  <Route path="/profile/:userId/posts/:postId" element={<PostDetail />} />
+  <Route path="/profile/edit" element={<ProfileEdit />} />
+        </Route>
 
-        <Route path="/profile/:userId" element={<ProtectedRoute> <Profile /> </ProtectedRoute>} />
-        <Route path="/profile/edit" element={<ProtectedRoute> <ProfileEdit /> </ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

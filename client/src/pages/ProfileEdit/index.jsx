@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import styles from "./ProfileEdit.module.css";
-import Sidebar from "../../components/Sidebar";
 import profileIcon from "../../assets/icons/profile.svg";
 
 function ProfileEdit() {
     const navigate = useNavigate();
     const currentUserId = localStorage.getItem("userId");
-
-    const [activeModal, setActiveModal] = useState(null);
 
     const [username, setUsername] = useState("");
     const [website, setWebsite] = useState("");
@@ -46,7 +43,7 @@ function ProfileEdit() {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setProfileImage(reader.result); 
+            setProfileImage(reader.result);
         };
         reader.readAsDataURL(file);
     };
@@ -79,112 +76,99 @@ function ProfileEdit() {
         }
     };
 
-    const handleNavClick = (menuName) => {
-        if (["Search", "Notifications", "Messages", "Create"].includes(menuName)) {
-            setActiveModal(activeModal === menuName ? null : menuName);
-        } else {
-            setActiveModal(null);
-            if (menuName === "Home") navigate("/");
-            if (menuName === "Profile") navigate(`/profile/${currentUserId}`);
-        }
-    };
 
     if (loading) return <div className={styles.loading}>Loading...</div>;
 
     return (
-        <div className={styles.layout}>
-            <Sidebar activeModal={activeModal} onNavClick={handleNavClick} />
+        <main className={styles.mainContent}>
+            <div className={styles.editContainer}>
+                <h1 className={styles.pageTitle}>Edit profile</h1>
 
-            <main className={styles.mainContent}>
-                <div className={styles.editContainer}>
-                    <h1 className={styles.pageTitle}>Edit profile</h1>
+                {error && <p className={styles.errorText}>{error}</p>}
+                {success && <p className={styles.successText}>Profile updated successfully!</p>}
 
-                    {error && <p className={styles.errorText}>{error}</p>}
-                    {success && <p className={styles.successText}>Profile updated successfully!</p>}
-
-                    <form onSubmit={handleSave} className={styles.form}>
-                        <div className={styles.userCard}>
-                            <div className={styles.userInfoLeft}>
-                                <img
-                                    src={profileImage || profileIcon}
-                                    alt="Avatar"
-                                    className={styles.avatar}
-                                />
-                                <div className={styles.userTexts}>
-                                    <span className={styles.cardUsername}>{username}</span>
-                                    <span className={styles.cardFullName}>{bio || "No bio yet."}</span>
-                                </div>
+                <form onSubmit={handleSave} className={styles.form}>
+                    <div className={styles.userCard}>
+                        <div className={styles.userInfoLeft}>
+                            <img
+                                src={profileImage || profileIcon}
+                                alt="Avatar"
+                                className={styles.avatar}
+                            />
+                            <div className={styles.userTexts}>
+                                <span className={styles.cardUsername}>{username}</span>
+                                <span className={styles.cardFullName}>{bio || "No bio yet."}</span>
                             </div>
-
-                            {/* Кнопка выбора фото с компьютера */}
-                            <label className={styles.newPhotoBtn}>
-                                New photo
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    style={{ display: "none" }}
-                                    onChange={handleImageChange}
-                                />
-                            </label>
                         </div>
 
-                        <div className={styles.inputGroup}>
-                            <label className={styles.label}>Username</label>
+                        <label className={styles.newPhotoBtn}>
+                            New photo
                             <input
-                                type="text"
-                                value={username}
-                                maxLength={26}
-                                minLength={2}
-                                onChange={(e) => setUsername(e.target.value)}
-                                className={styles.inputField}
-                                required
+                                type="file"
+                                accept="image/*"
+                                style={{ display: "none" }}
+                                onChange={handleImageChange}
                             />
-                        </div>
+                        </label>
+                    </div>
 
-                        <div className={styles.inputGroup}>
-                            <label className={styles.label}>Full Name</label>
-                            <input
-                                type="text"
-                                maxLength={26}
-                                value={fullName}
-                                onChange={(e) => setFullName(e.target.value)}
-                                className={styles.inputField}
-                                required
-                            />
-                        </div>
+                    <div className={styles.inputGroup}>
+                        <label className={styles.label}>Username</label>
+                        <input
+                            type="text"
+                            value={username}
+                            maxLength={26}
+                            minLength={2}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className={styles.inputField}
+                            required
+                        />
+                    </div>
 
-                        <div className={styles.inputGroup}>
-                            <label className={styles.label}>Website</label>
-                            <input
-                                type="text"
+                    <div className={styles.inputGroup}>
+                        <label className={styles.label}>Full Name</label>
+                        <input
+                            type="text"
+                            maxLength={26}
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            className={styles.inputField}
+                            required
+                        />
+                    </div>
+
+                    <div className={styles.inputGroup}>
+                        <label className={styles.label}>Website</label>
+                        <input
+                            type="text"
+                            maxLength={150}
+                            value={website}
+                            onChange={(e) => setWebsite(e.target.value)}
+                            className={styles.inputField}
+                            placeholder="Website"
+                        />
+                    </div>
+
+                    <div className={styles.inputGroup}>
+                        <label className={styles.label}>About</label>
+                        <div className={styles.textareaWrapper}>
+                            <textarea
+                                value={bio}
+                                onChange={(e) => setBio(e.target.value)}
                                 maxLength={150}
-                                value={website}
-                                onChange={(e) => setWebsite(e.target.value)}
-                                className={styles.inputField}
-                                placeholder="Website"
+                                className={styles.textareaField}
                             />
+                            <span className={styles.charCounter}>{bio.length}/150</span>
                         </div>
+                    </div>
 
-                        <div className={styles.inputGroup}>
-                            <label className={styles.label}>About</label>
-                            <div className={styles.textareaWrapper}>
-                                <textarea
-                                    value={bio}
-                                    onChange={(e) => setBio(e.target.value)}
-                                    maxLength={150}
-                                    className={styles.textareaField}
-                                />
-                                <span className={styles.charCounter}>{bio.length}/150</span>
-                            </div>
-                        </div>
+                    <button type="submit" className={styles.saveBtn}>
+                        Save
+                    </button>
+                </form>
+            </div>
+        </main>
 
-                        <button type="submit" className={styles.saveBtn}>
-                            Save
-                        </button>
-                    </form>
-                </div>
-            </main>
-        </div>
     );
 }
 

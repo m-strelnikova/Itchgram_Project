@@ -81,7 +81,7 @@ router.patch("/profile/edit", authMiddleware, async (req, res) => {
                 ...(bio !== undefined && { bio }),
                 ...(profileImage && { profileImage })
             },
-            { new: true, runValidators: true }
+            { returnDocument: "after", runValidators: true }
         );
 
         if (!updatedUser) {

@@ -1,119 +1,60 @@
-.layout {
-    display: flex;
-    min-height: 100vh;
-    background-color: #ffffff;
+.profileContainer {
+  width: 100%;
+  max-width: 935px; 
+  margin: 0 auto;
+  padding: 30px 20px 60px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.modalOverlay {
-    position: fixed;
-    top: 0;
-    left: 245px;
-    width: calc(100vw - 245px);
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.65);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    z-index: 999;
-}
-
-.modalContent {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 397px;
-    height: 100vh;
-    background-color: #ffffff;
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
-    border-right: 1px solid #dbdbdb;
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
-    padding: 24px 20px;
-    box-sizing: border-box;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-}
-
-.modalTitle {
-    font-size: 20px;
-    font-weight: 600;
-    color: #262626;
-    margin: 0;
-}
-
-.errorText {
-    color: #ed4956;
-    font-size: 14px;
-    margin-bottom: 16px;
-}
-
-.loadingText {
-    color: #737373;
-    font-size: 14px;
-}
-
-.mainContent {
-    margin-left: 245px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 36px 9.2% 0 9.2%;
+.mainSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .feed {
-    width: 100%;
-    max-width: 930px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    justify-content: center;
-    gap: 5px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 40px;
+  padding-top: 20px;
 }
 
 .imageContainer {
-    width: 100%;
+  width: 100%;
+  aspect-ratio: 1 / 1; 
 }
 
 .postImage {
-    height: 307px;
-    width: 307px;
-    display: block;
-    object-fit: cover;
-    flex-shrink: 1;
-    border: 0.86px solid #dbdbdb;
-    border-radius: 3px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
 }
 
-@media (max-width: 1260px) {
-    .mainContent {
-        margin-left: 245px;
-        padding: 36px 6% 0 6%;
-    }
+.errorText {
+  color: #ed4956;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
 
-    .feed {
-        padding: 26px 0 0 0 ;
-    }
+.loadingText {
+  color: #737373;
+  font-size: 14px;
 }
 
 @media (max-width: 725px) {
-
-    .mainContent {
-        margin-left: 72px;
-        margin-top: 28px;
-    }
-
-    .modalOverlay {
-        left: 72px;
-        width: calc(100vw - 72px);
-    }
-
-    .feed {
-        width: 100%;
-        max-width: calc(100vw - 72px);
-        display: flex;
-        flex-direction: column;
-        padding: 26px 20px 0 20px;
-    }
-
+  .profileContainer {
+    padding: 15px 10px;
+  }
+  .feed {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px; 
+  }
 }

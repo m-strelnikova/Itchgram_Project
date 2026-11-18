@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./PostDetail.module.css";
 import closeIcon from "../../assets/icons/close.svg";
 import likeIcon from "../../assets/icons/like.svg";

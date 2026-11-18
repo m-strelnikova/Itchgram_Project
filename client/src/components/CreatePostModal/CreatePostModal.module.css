@@ -12,8 +12,8 @@
 }
 
 .modalCard {
-  width: 750px;
-  height: 540px;
+  width: 52vw;
+  height: 80vh;
   background-color: #ffffff;
   border-radius: 12px;
   display: flex;
