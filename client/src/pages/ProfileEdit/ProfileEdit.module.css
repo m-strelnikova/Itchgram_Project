@@ -175,3 +175,21 @@
   margin-top: 50px;
   color: #737373;
 }
+
+.logoutBtn {
+  margin-top: 16px;
+  background-color: transparent;
+  color: #ed4956;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.logoutBtn:hover {
+  background-color: #fff5f5;
+  border-color: #ed4956;
+}

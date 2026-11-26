@@ -76,6 +76,11 @@ function ProfileEdit() {
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userId");
+        navigate("/login", { replace: true });
+    };
 
     if (loading) return <div className={styles.loading}>Loading...</div>;
 
@@ -164,6 +169,14 @@ function ProfileEdit() {
 
                     <button type="submit" className={styles.saveBtn}>
                         Save
+                    </button>
+
+                    <button
+                        type="button"
+                        className={styles.logoutBtn}
+                        onClick={handleLogout}
+                    >
+                        Log out
                     </button>
                 </form>
             </div>

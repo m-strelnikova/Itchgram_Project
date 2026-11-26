@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import styles from "./Reset.module.css";
 import ichgram from "../../assets/icons/ichgram.svg";
 import reset_login from "../../assets/icons/reset_login.svg";
