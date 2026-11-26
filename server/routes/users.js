@@ -4,6 +4,7 @@ import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
+// Following user
 router.post("/:id/follow", authMiddleware, async (req, res) => {
     try {
         const targetUserId = req.params.id;
@@ -38,7 +39,33 @@ router.post("/:id/follow", authMiddleware, async (req, res) => {
         res.status(500).json({ message: "Failed to update follow status" });
     }
 });
+// Searching users (username/fullName)
+router.get("/search", authMiddleware, async (req, res) => {
+  try {
+    const query = (req.query.q || "").trim();
 
+    if (!query) {
+      return res.status(200).json([]);
+    }
+
+    // regular expression for secure search
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const regex = new RegExp(escapedQuery, "i");
+
+    const users = await User.find({
+      $or: [{ username: regex }, { fullName: regex }]
+    })
+      .select("_id username fullName profileImage")
+      .limit(20);
+
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error("Search users error:", error);
+    return res.status(500).json({ message: "Failed to search users" });
+  }
+});
+
+// Get user's info
 router.get("/:id", authMiddleware, async (req, res) => {
     try {
 
@@ -104,5 +131,6 @@ router.patch("/profile/edit", authMiddleware, async (req, res) => {
         res.status(500).json({ message: "Failed to update profile" });
     }
 });
+
 
 export default router;

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styles from "./PostDetail.module.css";
-import closeIcon from "../../assets/icons/close.svg";
 import likeIcon from "../../assets/icons/like.svg";
 import likedIcon from "../../assets/icons/liked.svg";
 import commentIcon from "../../assets/icons/comment.svg";
@@ -104,9 +103,6 @@ function PostDetail() {
 
   return (
     <div className={styles.overlay} onClick={() => navigate(-1)}>
-      <button className={styles.closeBtn} onClick={() => navigate(-1)}>
-        <img src={closeIcon} alt="Close" />
-      </button>
 
       <div className={styles.modalCard} onClick={(e) => e.stopPropagation()}>
         <div className={styles.imageSection}>

@@ -1,0 +1,55 @@
+.galleryContainer {
+    width: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 30px 20px 60px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+}
+
+.feed {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 40px;
+  padding-top: 20px;
+}
+
+.imageContainer {
+  width: 100%;
+  aspect-ratio: 1 / 1; 
+}
+
+.postImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+
+.errorText {
+    color: #ed4956;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.loadingText {
+    color: #737373;
+    font-size: 14px;
+}
+
+@media (max-width: 725px) {
+  .galleryContainer {
+    padding: 15px 10px;
+     max-width: 100%;
+  }
+  .feed {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px; 
+  }
+}

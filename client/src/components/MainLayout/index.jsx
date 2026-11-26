@@ -4,6 +4,7 @@ import styles from "./MainLayout.module.css";
 import Footer from "../Footer";
 import CreatePostModal from "../CreatePostModal";
 import Sidebar from "../Sidebar";
+import SearchModal from "../SearchModal";
 
 function MainLayout() {
     const [activeModal, setActiveModal] = useState(null);
@@ -17,6 +18,7 @@ function MainLayout() {
         } else {
             setActiveModal(null);
             if (menuName === "Home") navigate("/");
+            if (menuName === "Explore") navigate("/gallery");
             if (menuName === "Profile") {
                 const currentUserId = localStorage.getItem("userId");
                 navigate(`/profile/${currentUserId}`);
@@ -38,6 +40,8 @@ function MainLayout() {
                         console.log(newPost._id);
                     }}
                 />
+            ) : activeModal === "Search" ? (
+                <SearchModal onClose={() => setActiveModal(null)} />
             ) : activeModal ? (
                 <div className={styles.modalOverlay} onClick={() => setActiveModal(null)}>
                     <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
