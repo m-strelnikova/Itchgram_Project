@@ -3,6 +3,8 @@ import multer from "multer";
 import Post from "../models/Post.js";
 import Comment from "../models/Comment.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import Notification from "../models/Notification.js";
+import { getIO } from "../socket.js";
 
 const router = express.Router();
 
@@ -117,6 +119,21 @@ router.post("/:id/comment", authMiddleware, async (req, res) => {
         post.comments.push(newComment._id);
         await post.save();
 
+        if (post.author.toString() !== req.user.userId) {
+            const createdNotif = await Notification.create({
+                recipient: post.author,
+                sender: req.user.userId,
+                type: "comment",
+                post: post._id
+            });
+
+            const populatedNotif = await Notification.findById(createdNotif._id)
+                .populate("sender", "username fullName profileImage")
+                .populate("post", "imageUrl");
+
+            getIO()?.to(post.author.toString()).emit("new_notification", populatedNotif);
+        }
+
         const updatedPost = await Post.findById(req.params.id)
             .populate("author", "username profileImage followers")
             .populate({
@@ -133,59 +150,59 @@ router.post("/:id/comment", authMiddleware, async (req, res) => {
 
 // Edit post (protected route)
 router.patch("/:id", authMiddleware, async (req, res) => {
-  try {
-    const { caption } = req.body;
-    const post = await Post.findById(req.params.id);
+    try {
+        const { caption } = req.body;
+        const post = await Post.findById(req.params.id);
 
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        if (post.author.toString() !== req.user.userId) {
+            return res.status(403).json({ message: "You can only edit your own posts" });
+        }
+
+        if (caption !== undefined) {
+            post.caption = caption;
+        }
+
+        await post.save();
+        await post.populate("author", "username profileImage fullName followers following");
+
+        return res.status(200).json(post);
+    } catch (error) {
+        console.error("Update post error:", error);
+        return res.status(500).json({ message: "Failed to update post" });
     }
-    if (post.author.toString() !== req.user.userId) {
-      return res.status(403).json({ message: "You can only edit your own posts" });
-    }
-
-    if (caption !== undefined) {
-      post.caption = caption;
-    }
-
-    await post.save();
-    await post.populate("author", "username profileImage fullName followers following");
-
-    return res.status(200).json(post);
-  } catch (error) {
-    console.error("Update post error:", error);
-    return res.status(500).json({ message: "Failed to update post" });
-  }
 });
 
 // Delete post (protected route)
 router.delete("/:id", authMiddleware, async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
+    try {
+        const post = await Post.findById(req.params.id);
 
-    if (!post) {
-      return res.status(404).json({ message: "Post not found" });
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        if (post.author.toString() !== req.user.userId) {
+            return res.status(403).json({ message: "You can only delete your own posts" });
+        }
+
+        if (Array.isArray(post.comments) && post.comments.length > 0) {
+            await Comment.deleteMany({ _id: { $in: post.comments } });
+        }
+        await Notification.deleteMany({ post: post._id });
+
+        await Post.findByIdAndDelete(req.params.id);
+
+        return res.status(200).json({
+            message: "Post and its comments deleted successfully",
+            postId: req.params.id
+        });
+    } catch (error) {
+        console.error("Delete post error:", error);
+        return res.status(500).json({ message: "Failed to delete post" });
     }
-
-    if (post.author.toString() !== req.user.userId) {
-      return res.status(403).json({ message: "You can only delete your own posts" });
-    }
-
-    if (Array.isArray(post.comments) && post.comments.length > 0) {
-      await Comment.deleteMany({ _id: { $in: post.comments } });
-    }
-    await Notification.deleteMany({ post: post._id });
-
-    await Post.findByIdAndDelete(req.params.id);
-
-    return res.status(200).json({
-      message: "Post and its comments deleted successfully",
-      postId: req.params.id
-    });
-  } catch (error) {
-    console.error("Delete post error:", error);
-    return res.status(500).json({ message: "Failed to delete post" });
-  }
 });
 
 export default router;
