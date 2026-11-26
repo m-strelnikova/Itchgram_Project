@@ -5,8 +5,14 @@ import Footer from "../Footer";
 import CreatePostModal from "../CreatePostModal";
 import Sidebar from "../Sidebar";
 import SearchModal from "../SearchModal";
+import NotificationsModal from "../NotificationsModal";
+import MessagesModal from "../MessagesModal";
+import { connectSocket } from "../../socket";
 
 function MainLayout() {
+
+    connectSocket()
+    const [targetMessageUserId, setTargetMessageUserId] = useState(null)
     const [activeModal, setActiveModal] = useState(null);
     const navigate = useNavigate();
 
@@ -42,18 +48,23 @@ function MainLayout() {
                 />
             ) : activeModal === "Search" ? (
                 <SearchModal onClose={() => setActiveModal(null)} />
-            ) : activeModal ? (
-                <div className={styles.modalOverlay} onClick={() => setActiveModal(null)}>
-                    <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-                        <h2 className={styles.modalTitle}>{activeModal}</h2>
+            ) : activeModal === "Notifications" ? (
+                <NotificationsModal onClose={() => setActiveModal(null)} />
+            ) : activeModal === "Messages" ? (
+                <MessagesModal initialTargetUserId={targetMessageUserId} onClose={() => { setTargetMessageUserId(null); setActiveModal(null); }} />
+            ) :
+                activeModal ? (
+                    <div className={styles.modalOverlay} onClick={() => setActiveModal(null)}>
+                        <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                            <h2 className={styles.modalTitle}>{activeModal}</h2>
+                        </div>
                     </div>
-                </div>
-            ) : null}
+                ) : null}
 
 
             <div className={styles.contentWrapper}>
 
-                <Outlet context={{ setActiveModal }} />
+                <Outlet context={{ setActiveModal, openMessageWithUser: (userId) => { setTargetMessageUserId(userId); setActiveModal("Messages"); } }} />
                 <Footer handleNavClick={handleNavClick} />
             </div>
 

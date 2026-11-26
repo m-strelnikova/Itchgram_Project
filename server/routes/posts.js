@@ -166,14 +166,20 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
+
     if (post.author.toString() !== req.user.userId) {
       return res.status(403).json({ message: "You can only delete your own posts" });
     }
 
+    if (Array.isArray(post.comments) && post.comments.length > 0) {
+      await Comment.deleteMany({ _id: { $in: post.comments } });
+    }
+    await Notification.deleteMany({ post: post._id });
+
     await Post.findByIdAndDelete(req.params.id);
 
     return res.status(200).json({
-      message: "Post deleted successfully",
+      message: "Post and its comments deleted successfully",
       postId: req.params.id
     });
   } catch (error) {

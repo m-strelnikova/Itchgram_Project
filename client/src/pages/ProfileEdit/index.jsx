@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ProfileEdit.module.css";
 import profileIcon from "../../assets/icons/profile.svg";
+import { disconnectSocket } from "../../socket.js";
 
 function ProfileEdit() {
     const navigate = useNavigate();
@@ -77,6 +78,8 @@ function ProfileEdit() {
     };
 
     const handleLogout = () => {
+        disconnectSocket();
+
         localStorage.removeItem("token");
         localStorage.removeItem("userId");
         navigate("/login", { replace: true });

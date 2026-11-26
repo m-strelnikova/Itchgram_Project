@@ -7,7 +7,7 @@ function Profile() {
     const { userId } = useParams();
     const navigate = useNavigate();
 
-    const { setActiveModal } = useOutletContext();
+    const { openMessageWithUser } = useOutletContext();
 
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -45,7 +45,7 @@ function Profile() {
             <ProfileHeader
                 profileUserId={userId}
                 postsCount={posts.length}
-                onOpenMessageModal={() => setActiveModal("Messages")}
+                onOpenMessageModal={() => openMessageWithUser(userId)}
             />
 
             <main className={styles.mainSection}>
