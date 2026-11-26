@@ -59,7 +59,7 @@ router.get("/:id", authMiddleware, async (req, res) => {
     }
 });
 
-// Обновление профиля текущего пользователя
+// Edit current user's profile
 router.patch("/profile/edit", authMiddleware, async (req, res) => {
     try {
         const currentUserId = req.user.userId;

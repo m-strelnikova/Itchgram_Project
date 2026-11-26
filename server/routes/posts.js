@@ -131,4 +131,55 @@ router.post("/:id/comment", authMiddleware, async (req, res) => {
     }
 });
 
+// Edit post (protected route)
+router.patch("/:id", authMiddleware, async (req, res) => {
+  try {
+    const { caption } = req.body;
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    if (post.author.toString() !== req.user.userId) {
+      return res.status(403).json({ message: "You can only edit your own posts" });
+    }
+
+    if (caption !== undefined) {
+      post.caption = caption;
+    }
+
+    await post.save();
+    await post.populate("author", "username profileImage fullName followers following");
+
+    return res.status(200).json(post);
+  } catch (error) {
+    console.error("Update post error:", error);
+    return res.status(500).json({ message: "Failed to update post" });
+  }
+});
+
+// Delete post (protected route)
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    if (post.author.toString() !== req.user.userId) {
+      return res.status(403).json({ message: "You can only delete your own posts" });
+    }
+
+    await Post.findByIdAndDelete(req.params.id);
+
+    return res.status(200).json({
+      message: "Post deleted successfully",
+      postId: req.params.id
+    });
+  } catch (error) {
+    console.error("Delete post error:", error);
+    return res.status(500).json({ message: "Failed to delete post" });
+  }
+});
+
 export default router;

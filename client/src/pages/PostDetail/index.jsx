@@ -7,13 +7,15 @@ import likedIcon from "../../assets/icons/liked.svg";
 import commentIcon from "../../assets/icons/comment.svg";
 import profileIcon from "../../assets/icons/profile.svg";
 import UserLink from "../../components/UserLink";
+import menu from "../../assets/icons/menu.svg";
+import PostOptionModal from "../../components/PostOptionModal";
 
 function PostDetail() {
   const { postId } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [commentText, setCommentText] = useState("");
-  const [copied, setCopied] = useState(false);
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const currentUserId = localStorage.getItem("userId");
 
   useEffect(() => {
@@ -68,7 +70,6 @@ function PostDetail() {
     }
   };
 
-
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!commentText.trim()) return;
@@ -93,14 +94,10 @@ function PostDetail() {
     }
   };
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   if (!post) return null;
 
+  const authorId = typeof post.author === "string" ? post.author : post.author?._id;
+  const isAuthor = authorId === currentUserId;
   const isLiked = post.likes?.includes(currentUserId);
   const isFollowing = post.author.followers?.includes(currentUserId);
   const isMyPost = post.author._id === currentUserId;
@@ -117,7 +114,6 @@ function PostDetail() {
         </div>
 
         <div className={styles.contentSection}>
-
           <div className={styles.header}>
             <div className={styles.authorInfo}>
               <UserLink userId={post.author._id} className={styles.authorInfo}>
@@ -130,14 +126,42 @@ function PostDetail() {
                 <span>•</span>
               </UserLink>
               {!isMyPost && (
-                <button className={styles.copyLinkBtn} onClick={handleFollow}>
+                <button className={styles.followBtn} onClick={handleFollow}>
                   {isFollowing ? "Following" : "Follow"}
                 </button>
               )}
             </div>
-            <button className={styles.copyLinkBtn} onClick={handleCopyLink}>
-              {copied ? "Copied!" : "Copy link"}
+
+            <button
+              className={styles.optionsBtn}
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOptionsOpen(true);
+              }}
+              aria-label="More options"
+            >
+              <img src={menu} alt="Options" />
             </button>
+
+            {isOptionsOpen && (
+              <PostOptionModal
+                post={post}
+                isAuthor={isAuthor}
+                onClose={() => setIsOptionsOpen(false)}
+                onPostUpdated={(updatedPost) => {
+                  setPost((prev) => ({
+                    ...prev,
+                    ...updatedPost,
+                    author: typeof updatedPost.author === "object" ? updatedPost.author : prev.author
+                  }));
+                }}
+                onPostDeleted={() => {
+                  setIsOptionsOpen(false);
+                  navigate(-1);
+                }}
+              />
+            )}
           </div>
 
           <div className={styles.commentsList}>

@@ -85,7 +85,7 @@
   color: #262626;
 }
 
-.copyLinkBtn {
+.followBtn {
   background: none;
   border: none;
   color: #0095f6;
@@ -94,8 +94,13 @@
   cursor: pointer;
 }
 
-.copyLinkBtn:hover {
+.followBtn:hover {
   color: #00376b;
+}
+
+.optionsBtn {
+  background-color: white;
+  border: none;
 }
 
 .commentsList {

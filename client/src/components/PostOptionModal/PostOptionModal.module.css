@@ -1,0 +1,135 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+  backdrop-filter: blur(2px); 
+}
+
+.modal {
+  width: 90%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.dangerBtn,
+.optionBtn,
+.cancelActionBtn {
+  width: 100%;
+  padding: 16px 16px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #dbdbdb;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  display: block;
+}
+
+.dangerBtn {
+  color: #ed4956;
+  font-weight: 700;
+}
+
+.optionBtn {
+  color: #262626;
+  font-weight: 400;
+}
+
+.cancelActionBtn {
+  color: #262626;
+  font-weight: 400;
+  border-bottom: none;
+}
+
+.dangerBtn:active,
+.optionBtn:active,
+.cancelActionBtn:active {
+  background-color: #fafafa;
+}
+
+.editForm {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editTitle {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  color: #262626;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid #dbdbdb;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #262626;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #a8a8a8;
+}
+
+.editActions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancelBtn,
+.saveBtn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancelBtn {
+  background-color: transparent;
+  border: 1px solid #dbdbdb;
+  color: #262626;
+}
+
+.saveBtn {
+  background-color: #0095f6;
+  border: none;
+  color: #ffffff;
+}
+
+.saveBtn:hover {
+  background-color: #1877f2;
+}
+
+.error {
+  margin: 0;
+  padding: 12px;
+  font-size: 13px;
+  color: #ed4956;
+  text-align: center;
+  background-color: #fff5f5;
+  border-bottom: 1px solid #dbdbdb;
+}
